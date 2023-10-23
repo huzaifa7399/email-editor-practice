@@ -63,14 +63,16 @@ const GrapeEmailEditor = () => {
 
           var mjmldata = e.getHtml();
           var cssdata = e.getCss();
-          console.log(mjmldata, cssdata);
-          var htmldata = e.runCommand("gjs-get-inlined-html");
-          console.log(editorInstance.current);
+          console.log(mjmldata);
+
+          // var htmldata = e.runCommand("gjs-get-inlined-html");
+          // console.log(editorInstance.current);
           console.log(e.getHtml("gjs-get-inlined-html"));
 
           //to do - post to db
         },
       });
+
       // Set the initial content of the canvas
       const defaultContent = defaultEmailTemplate;
       // const defaultContent = `
