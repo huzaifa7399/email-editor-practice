@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import grapesjsMJML from "grapesjs-mjml";
+import GjsEditor from "@grapesjs/react";
 import grapesjs from "grapesjs";
 import "grapesjs/dist/css/grapes.min.css";
-import { defaultEmailTemplate } from "../helpers";
+import {
+  defaultEmailTemplate,
+  defaultEmailTemplateHtml,
+  template,
+} from "../helpers";
 
 const GrapeEmailEditor = () => {
   const editorContainerRef = useRef(null);
@@ -17,7 +22,51 @@ const GrapeEmailEditor = () => {
         pluginsOpts: {
           [grapesjsMJML]: {},
         },
-        storageManager: false,
+        layerManager: {
+          sortable: false,
+          hidable: false,
+        },
+        assetManager: {
+          // ...
+          // Upload endpoint, set `false` to disable upload, default `false`
+          upload:
+            "https://dev-push.universal-apps.com/api/v1/campaign/upload-image",
+
+          // The name used in POST to pass uploaded files, default: `'files'`
+          uploadName: "image",
+          // ...
+        },
+        storageManager: {
+          id: "gjs-",
+          type: "local",
+          autosave: true,
+          storeComponents: true,
+          storeStyles: true,
+          storeHtml: true,
+          storeCss: true,
+        },
+        deviceManager: {
+          devices: [
+            {
+              id: "desktop",
+              name: "Desktop",
+              width: "",
+            },
+            {
+              id: "tablet",
+              name: "Tablet",
+              width: "768px",
+              widthMedia: "992px",
+            },
+            {
+              id: "mobilePortrait",
+              name: "Mobile portrait",
+              width: "320px",
+              widthMedia: "575px",
+            },
+          ],
+        },
+        // storageManager: false,
         // storageManager: {
         //   type: "local", // Type of the storage, available: 'local' | 'remote'
         //   autosave: true, // Store data automatically
@@ -61,14 +110,7 @@ const GrapeEmailEditor = () => {
           sender && sender.set("active", 0); // turn off the button
           e.store();
 
-          var mjmldata = e.getHtml();
-          var cssdata = e.getCss();
-          console.log(mjmldata);
-
-          // var htmldata = e.runCommand("gjs-get-inlined-html");
-          // console.log(editorInstance.current);
-          console.log(e.getHtml("gjs-get-inlined-html"));
-
+          console.log(JSON.stringify(e.getComponents()));
           //to do - post to db
         },
       });
@@ -90,16 +132,71 @@ const GrapeEmailEditor = () => {
     }
   }, [editorContainerRef]);
 
-  const handleSave = () => {
-    if (editor) {
-      console.log(editor.getComponents());
-    }
+  const onEditor = (editor) => {
+    editor.Panels.addButton("options", [
+      {
+        id: "save-db",
+        className: "fa fa-floppy-o",
+        command: "save-db",
+        attributes: { title: "Save Template" },
+      },
+      {
+        id: "show-json",
+        className: "btn-show-json",
+        label: "{}",
+        context: "show-json",
+        command(editor) {
+          editor.Modal.setTitle("Components JSON")
+            .setContent(
+              `<textarea style="width:100%; height: 250px;">
+              ${JSON.stringify(editor.getComponents())}
+            </textarea>`
+            )
+            .open();
+        },
+      },
+    ]);
+
+    // Add the command
+    editor.Commands.add("save-db", {
+      run: function (e, sender) {
+        sender && sender.set("active", 0); // turn off the button
+        e.store();
+
+        console.log(JSON.stringify(e.getComponents()));
+        //to do - post to db
+      },
+    });
+
+    const defaultContent = defaultEmailTemplate;
+    // const defaultContent = `
+    //   <mjml>
+    //     <mj-body>
+    //     </mj-body>
+    //   </mjml>`;
+    editor.setComponents(defaultContent);
+    console.log("Editor loaded", { editor });
   };
 
   return (
     <>
+      <GjsEditor
+        grapesjs="https://unpkg.com/grapesjs"
+        grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
+        options={{
+          height: "100vh",
+          storageManager: false,
+        }}
+        plugins={[
+          {
+            id: "gjs-blocks-basic",
+            src: "https://unpkg.com/grapesjs-blocks-basic",
+          },
+          // grapesjsMJML,
+        ]}
+        onEditor={onEditor}
+      />
       <div ref={editorContainerRef}></div>
-      <button onClick={handleSave}>Save</button>
     </>
   );
 };

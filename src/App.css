@@ -37,3 +37,28 @@
     transform: rotate(360deg);
   }
 }
+#gjs {
+  border: 3px solid #444;
+}
+
+/* Reset some default styling */
+/* .gjs-pn-panel {
+  left: 0 !important;
+}
+.gjs-pn-panels {
+  left: 50% !important;
+}
+.gjs-cv-canvas {
+  top: 0;
+  width: 100% !important;
+  height: 100%;
+}
+.gjs-pn-buttons {
+  position: relative;
+  left: 30% !important;
+  width: 60% !important;
+}
+.gjs-pn-devices-c {
+  position: relative;
+  right: 0% !important;
+} */
