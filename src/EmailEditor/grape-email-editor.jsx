@@ -103,7 +103,8 @@ const GrapeEmailEditor = () => {
           },
         },
       ]);
-
+      editorInstance.setDevice("Tablet");
+      console.log(editorInstance.getDevice());
       // Add the command
       editorInstance.Commands.add("save-db", {
         run: function (e, sender) {
@@ -125,7 +126,12 @@ const GrapeEmailEditor = () => {
       editorInstance.setComponents(defaultContent);
 
       setEditor(editorInstance);
-
+      function returnHtml() {
+        const htmlWithCss = editorInstance.runCommand("gjs-get-inlined-html");
+        console.log(editorInstance.Commands.run("gjs-get-inlined-html"));
+        console.log(htmlWithCss);
+      }
+      returnHtml();
       return () => {
         editorInstance.destroy();
       };
@@ -192,7 +198,7 @@ const GrapeEmailEditor = () => {
             id: "gjs-blocks-basic",
             src: "https://unpkg.com/grapesjs-blocks-basic",
           },
-          // grapesjsMJML,
+          grapesjsMJML,
         ]}
         onEditor={onEditor}
       />
