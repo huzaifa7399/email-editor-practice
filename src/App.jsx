@@ -3,7 +3,6 @@ import "./App.css";
 import GrapeEmailEditor from "./EmailEditor/grape-email-editor";
 import grapesjs from "grapesjs";
 import { useEffect, useRef } from "react";
-import MyEditor from "./EmailEditor/beacas-email-editor";
 
 function App() {
   const emailEditorRef = useRef(null);

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import grapesjsMJML from "grapesjs-mjml";
 import GjsEditor from "@grapesjs/react";
 import grapesjs from "grapesjs";
-// import mjml2html from "mjml";
+import mjml2html from "mjml-browser";
 import "grapesjs/dist/css/grapes.min.css";
 import {
   defaultEmailTemplate,
@@ -213,13 +213,54 @@ const GrapeEmailEditor = () => {
         ]}
         // onEditor={onEditor}
         onEditor={(editor) => {
+          editor.setComponents(defaultEmailTemplate);
+
           // Custom callback to handle the editor instance
-          onEditor(editor);
+          // onEditor(editor);
           // console.log(editor.config);
           // Assuming onEditor is a function that handles the editor instance
-          editor.Commands.add("get-html-inline-styles", {
-            run: (editor, sender) => {
-              // Get the HTML with inline styles
+          // editor.Commands.add("get-html-inline-styles", {
+          //   run: (editor, sender) => {
+          //     // Get the HTML with inline styles
+          //     const htmlWithInlineStyles = editor.getHtml({ inlineCss: true });
+
+          //     // Handle the HTML as needed (e.g., save to a remote server)
+          //     console.log(htmlWithInlineStyles);
+          //     const { html } = mjml2html(htmlWithInlineStyles, {
+          //       beautify: true,
+          //     });
+          //     console.log(html);
+          //   },
+          // });
+
+          editor.Panels.removeButton("options", "export-template"); // export html / mjml button hidden
+          // console.log(editor.Panels.getPanel("options"));
+          editor.Panels.addButton("options", [
+            {
+              id: "save-db",
+              className: "fa fa-floppy-o",
+              command: "save-db",
+              attributes: { title: "Save Template" },
+            },
+            {
+              id: "show-json",
+              className: "btn-show-json",
+              label: "{}",
+              context: "show-json",
+              command(editor) {
+                editor.Modal.setTitle("Components JSON")
+                  .setContent(
+                    `<textarea style="width:100%; height: 250px;">
+                    ${JSON.stringify(editor.getComponents())}
+                  </textarea>`
+                  )
+                  .open();
+              },
+            },
+          ]);
+
+          editor.Commands.add("save-db", {
+            run: function (editor) {
               const htmlWithInlineStyles = editor.getHtml({ inlineCss: true });
 
               // Handle the HTML as needed (e.g., save to a remote server)
@@ -230,9 +271,8 @@ const GrapeEmailEditor = () => {
               console.log(html);
             },
           });
-
           // Trigger the custom command to get HTML with inline styles
-          editor.runCommand("get-html-inline-styles");
+          // editor.runCommand("get-html-inline-styles");
         }}
       />
       {/* <div ref={editorContainerRef}></div> */}
