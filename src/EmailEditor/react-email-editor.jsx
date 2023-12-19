@@ -1,10 +1,8 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import EmailEditor from "react-email-editor";
 import { template } from "./helpers";
 
-const EmailEditorPreview = () => {
-  const emailEditorRef = useRef(null);
-
+const EmailEditorPreview = ({ emailEditorRef }) => {
   const exportHtml = () => {
     emailEditorRef.current.editor.exportHtml((data) => {
       //console design as html + object
@@ -20,12 +18,14 @@ const EmailEditorPreview = () => {
       emailEditorRef.current.editor.loadDesign(template);
   };
 
+  useEffect(() => {
+    exportHtml();
+    console.log("lkshdaklfhsdfh");
+  }, []);
   return (
     <>
       <div>
-        <div>
-          <button onClick={exportHtml}>Export HTML</button>
-        </div>
+        <div></div>
         <hr />
         <EmailEditor
           projectId={186868}
@@ -43,6 +43,7 @@ const EmailEditorPreview = () => {
           onLoad={onLoad}
         />
       </div>
+      <button onClick={exportHtml}>Export HTML</button>
     </>
   );
 };

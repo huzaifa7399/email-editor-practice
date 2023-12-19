@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import grapesjsMJML from "grapesjs-mjml";
 import GjsEditor from "@grapesjs/react";
 import grapesjs from "grapesjs";
+// import mjml2html from "mjml";
 import "grapesjs/dist/css/grapes.min.css";
 import {
   defaultEmailTemplate,
@@ -131,7 +132,7 @@ const GrapeEmailEditor = () => {
         console.log(editorInstance.Commands.run("gjs-get-inlined-html"));
         console.log(htmlWithCss);
       }
-      returnHtml();
+      // returnHtml();
       return () => {
         editorInstance.destroy();
       };
@@ -169,6 +170,7 @@ const GrapeEmailEditor = () => {
         sender && sender.set("active", 0); // turn off the button
         e.store();
 
+        console.log(e);
         console.log(JSON.stringify(e.getComponents()));
         //to do - post to db
       },
@@ -191,18 +193,49 @@ const GrapeEmailEditor = () => {
         grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
         options={{
           height: "100vh",
-          storageManager: false,
+          storageManager: {
+            type: "local", // Use local storage
+            autosave: true, // Enable autosave
+            autoload: true, // Load the previously saved content on editor initialization
+            stepsBeforeSave: 1, // Number of steps (changes) before triggering autosave
+            storeComponents: true, // Store components data
+            storeStyles: true, // Store styles data
+            storeHtml: true, // Store HTML data
+            storeCss: true, // Store CSS data
+          },
         }}
         plugins={[
           {
             id: "gjs-blocks-basic",
             src: "https://unpkg.com/grapesjs-blocks-basic",
           },
-          grapesjsMJML,
+          // grapesjsMJML,
         ]}
-        onEditor={onEditor}
+        // onEditor={onEditor}
+        onEditor={(editor) => {
+          // Custom callback to handle the editor instance
+          onEditor(editor);
+          // console.log(editor.config);
+          // Assuming onEditor is a function that handles the editor instance
+          editor.Commands.add("get-html-inline-styles", {
+            run: (editor, sender) => {
+              // Get the HTML with inline styles
+              const htmlWithInlineStyles = editor.getHtml({ inlineCss: true });
+
+              // Handle the HTML as needed (e.g., save to a remote server)
+              console.log(htmlWithInlineStyles);
+              const { html } = mjml2html(htmlWithInlineStyles, {
+                beautify: true,
+              });
+              console.log(html);
+            },
+          });
+
+          // Trigger the custom command to get HTML with inline styles
+          editor.runCommand("get-html-inline-styles");
+        }}
       />
-      <div ref={editorContainerRef}></div>
+      {/* <div ref={editorContainerRef}></div> */}
     </>
   );
 };
