@@ -209,7 +209,7 @@ const GrapeEmailEditor = () => {
             id: "gjs-blocks-basic",
             src: "https://unpkg.com/grapesjs-blocks-basic",
           },
-          // grapesjsMJML,
+          grapesjsMJML,
         ]}
         // onEditor={onEditor}
         onEditor={(editor) => {
