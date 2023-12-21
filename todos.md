@@ -1,8 +1,13 @@
-console json and html with inline styles
+<!-- console json and html with inline styles -->
+
+<!-- remove unwanted buttons -->
+
+<!-- hide sidebar layer manager -->
+
 sidebar to left side
-hide sidebar layer manager
+
 style manager sections opened by default
 image uploads...
 load designs...
-remove unwanted buttons
+
 change theme
