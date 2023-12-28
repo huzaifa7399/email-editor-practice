@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import grapesjsMJML from "grapesjs-mjml";
 import GjsEditor from "@grapesjs/react";
 import mjml2html from "mjml-browser";
-import "grapesjs/dist/css/grapes.min.css";
+import grapesjs from "grapesjs";
 import {
   defaultEmailTemplate,
   defaultEmailTemplateHtml,
@@ -13,7 +13,7 @@ const GrapeEmailEditor = () => {
   return (
     <>
       <GjsEditor
-        grapesjs="https://unpkg.com/grapesjs"
+        grapesjs={grapesjs}
         grapesjsCss="https://unpkg.com/grapesjs/dist/css/grapes.min.css"
         options={{
           height: "100vh",
@@ -36,6 +36,12 @@ const GrapeEmailEditor = () => {
           grapesjsMJML,
         ]}
         onEditor={(editor) => {
+          console.log("lkdshjafkl");
+          editor.on("rteToolbarPosUpdate", (pos) => {
+            console.log(pos);
+            pos.left;
+            // eg. update `pos.top` and `pos.left` based on additional data passed inside `pos`
+          });
           editor.setComponents(defaultEmailTemplate); // it will not load if there is another template in local-storage
           editor.Panels.removeButton("views", "open-layers");
           editor.Panels.removeButton("options", "export-template"); // export html / mjml button hidden

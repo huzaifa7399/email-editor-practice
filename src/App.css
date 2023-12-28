@@ -42,23 +42,68 @@
 }
 
 /* Reset some default styling */
+
+/* Example: Change the background color of the canvas area */
+.gjs-cv-canvas {
+  background-color: #f0f0f0 !important;
+}
+
+/* Add more custom styles as needed */
+
 /* .gjs-pn-panel {
   left: 0 !important;
+  width: 350px !important;
 }
-.gjs-pn-panels {
-  left: 50% !important;
+
+.gjs-pn-devices-c > .gjs-pn-buttons {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  width: 100px !important;
 }
 .gjs-cv-canvas {
-  top: 0;
+  left: 350px !important;
+  width: 76% !important;
+  height: 100% !important;
+}
+
+.gjs-pn-options > .gjs-pn-buttons {
+  position: relative;
+  left: 190% !important;
   width: 100% !important;
-  height: 100%;
+}
+.gjs-pn-devices-c > .gjs-pn-buttons {
+  position: relative;
+  left: 110% !important;
 }
 .gjs-pn-buttons {
   position: relative;
-  left: 30% !important;
+  left: 0% !important;
   width: 60% !important;
 }
-.gjs-pn-devices-c {
+.gjs-blocks-c {
+  display: grid !important;
+  grid-template-columns: repeat(3, 105px) !important;
+  gap: 10px;
+}
+.gjs-block {
+  width: 100% !important;
+  height: 90% !important;
+}
+.gjs-pn-options {
   position: relative;
-  right: 0% !important;
+  left: 40%;
+}
+.gjs-one-bg {
+  background-color: #fff !important;
+}
+.gjs-block__media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0px !important;
+}
+.gjs-block__media > svg {
+  height: 50% !important;
+  color: black;
 } */
