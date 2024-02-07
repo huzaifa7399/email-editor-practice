@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import EmailEditor from "react-email-editor";
-import { template } from "./helpers";
+import { template } from "../helpers";
+// import { template } from "./helpers";
 
 const EmailEditorPreview = ({ emailEditorRef }) => {
   const exportHtml = () => {
@@ -19,7 +20,7 @@ const EmailEditorPreview = ({ emailEditorRef }) => {
   };
 
   useEffect(() => {
-    exportHtml();
+    // exportHtml();
     console.log("lkshdaklfhsdfh");
   }, []);
   return (
