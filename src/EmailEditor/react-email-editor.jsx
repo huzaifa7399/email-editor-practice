@@ -36,6 +36,7 @@ const EmailEditorPreview = ({ emailEditorRef }) => {
           }}
           options={{
             displayMode: "email",
+            mergeTags: {},
             features: {
               stockImages: true,
             },

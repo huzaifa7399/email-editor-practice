@@ -1,4 +1,3 @@
- 
 #gjs {
   border: 3px solid #444;
 }
@@ -8,13 +7,19 @@
 /* Example: Change the background color of the canvas area */
 .gjs-cv-canvas {
   background-color: #f0f0f0 !important;
+  /* left: 50% !important; */
+  /* right: 50% !important; */
+  /* width: 76% !important; */
+  /* height: 100% !important; */
 }
 
 /* Add more custom styles as needed */
 
-/* .gjs-pn-panel {
+.gjs-pn-panel {
   left: 0 !important;
   width: 350px !important;
+  /* display: flex;
+  flex-direction: row-reverse; */
 }
 
 .gjs-pn-devices-c > .gjs-pn-buttons {
@@ -68,4 +73,4 @@
 .gjs-block__media > svg {
   height: 50% !important;
   color: black;
-} */
+}
