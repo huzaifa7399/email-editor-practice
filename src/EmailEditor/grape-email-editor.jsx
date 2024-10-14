@@ -6,6 +6,7 @@ import grapesjs from "grapesjs";
 import {
   defaultEmailTemplate,
   defaultEmailTemplateHtml,
+  newsletterHtml,
   template,
 } from "../helpers";
 
@@ -42,7 +43,7 @@ const GrapeEmailEditor = () => {
             pos.left;
             // eg. update `pos.top` and `pos.left` based on additional data passed inside `pos`
           });
-          editor.setComponents(defaultEmailTemplate); // it will not load if there is another template in local-storage
+          editor.setComponents(newsletterHtml); // it will not load if there is another template in local-storage
           editor.Panels.removeButton("views", "open-layers");
           editor.Panels.removeButton("options", "export-template"); // export html / mjml button hidden
 
