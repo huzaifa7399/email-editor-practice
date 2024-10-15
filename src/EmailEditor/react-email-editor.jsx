@@ -15,8 +15,38 @@ const EmailEditorPreview = ({ emailEditorRef }) => {
 
   const onLoad = () => {
     // emailEditorRef.current.loadDesign(template);
-    if (emailEditorRef.current && emailEditorRef.current.editor)
+    if (emailEditorRef.current && emailEditorRef.current.editor) {
+      emailEditorRef.current.editor.registerTool({
+        name: "my_tool",
+        label: "My Tool",
+        icon: "fa-smile",
+        supportedDisplayModes: ["email"],
+        values: {},
+        renderer: {
+          Viewer: emailEditorRef.current.editor.createViewer({
+            render(values) {
+              return "<div>I am a custom tool.</div>";
+            },
+          }),
+          exporters: {
+            web: function (values) {
+              return "<div>I am a custom tool.</div>";
+            },
+            email: function (values) {
+              return "<div>I am a custom tool.</div>";
+            },
+          },
+          head: {
+            css: function (values) {},
+            js: function (values) {},
+          },
+        },
+        validator(data) {
+          return [];
+        },
+      });
       emailEditorRef.current.editor.loadDesign(template);
+    }
   };
 
   useEffect(() => {
@@ -37,6 +67,7 @@ const EmailEditorPreview = ({ emailEditorRef }) => {
           options={{
             displayMode: "email",
             mergeTags: {},
+            tools: {},
             features: {
               stockImages: true,
             },
