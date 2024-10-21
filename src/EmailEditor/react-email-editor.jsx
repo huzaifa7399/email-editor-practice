@@ -8,7 +8,7 @@ const EmailEditorPreview = ({ emailEditorRef }) => {
     emailEditorRef.current.editor.exportHtml((data) => {
       //console design as html + object
       const { design, html } = data;
-      console.log("exportHtml", html);
+      // console.log("exportHtml", html);
       console.log("design", design);
     });
   };
