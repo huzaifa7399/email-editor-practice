@@ -14,6 +14,7 @@ const HomePage = () => {
       <Link to="/grape-editor">grape-editor</Link>
       {/* <Link to="/easy-editor">easy-editor</Link> */}
       <Link to="/unlayer-editor">unlayer-editor</Link>
+      <Link to="/grape-studio">grape-studio</Link>
     </div>
   );
 };
